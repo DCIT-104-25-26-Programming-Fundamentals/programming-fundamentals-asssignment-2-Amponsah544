@@ -57,3 +57,38 @@
 #include <iostream>
 using namespace std;
 
+void M_Table(int num) {
+    cout << "Multiplication Table for " << num << ":" << endl;
+    for (int i = 1; i <= 12; i++) {
+        int answer = num * i;
+        cout << num << " x " << i << " = " << answer << endl;
+    }
+}
+
+void Multi_Tables(int maxNum) {
+    for (int i = 1; i <= maxNum; i++) {
+        M_Table(i);
+        if (i < maxNum) {
+            cout << "---------------------------" << endl;
+        }
+    }
+}
+
+int main() {
+    int Table;
+    cout << "Enter a number: ";
+    cin >> Table;
+
+    if (Table <= 0) {
+        cout << "Error: Please enter a positive integer." << endl;
+        return 1;
+    }
+
+    M_Table(Table);
+
+    cout << endl << "---------------------------" << endl;
+
+    Multi_Tables(Table);
+
+    return 0;
+}
