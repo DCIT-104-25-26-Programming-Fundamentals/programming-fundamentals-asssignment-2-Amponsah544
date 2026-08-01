@@ -83,3 +83,141 @@
 #include <iomanip>
 using namespace std;
 
+struct Student {
+    string name;
+    int id;
+    vector<double> scores;
+};
+
+void showMenu() {
+    cout << endl;
+    cout << "================================" << endl;
+    cout << "   STUDENT RECORD SYSTEM MENU" << endl;
+    cout << "================================" << endl;
+    cout << "1. Add student" << endl;
+    cout << "2. Display all students" << endl;
+    cout << "3. Calculate average score" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+
+double calAvg(vector<double> scores) {
+    if (scores.empty()) {
+        return 0.0;
+    }
+    double total = 0.0;
+    for (int i = 0; i < scores.size(); i++) {
+        total = total + scores[i];
+    }
+    return total / scores.size();
+}
+
+void addStud(vector<Student>& students) {
+    Student tempStudent;
+    
+    cout << "Student name: ";
+    cin.ignore();
+    getline(cin, tempStudent.name);
+
+    cout << "Student ID: ";
+    cin >> tempStudent.id;
+
+    while (tempStudent.id < 10000000 || tempStudent.id > 99999999) {
+        cout << "Error: You need to type only 8 digits. Enter Student ID: ";
+        cin >> tempStudent.id;
+    }
+
+    int totalScores;
+    cout << "How many scores? ";
+    cin >> totalScores;
+
+    for (int i = 0; i < totalScores; i++) {
+        double currentScore;
+        cout << "Enter score " << i + 1 << ": ";
+        cin >> currentScore;
+        tempStudent.scores.push_back(currentScore);
+    }
+
+    students.push_back(tempStudent);
+    cout << "Student \"" << tempStudent.name << "\" added successfully." << endl;
+}
+
+void dispStud(const vector<Student>& students) {
+    if (students.empty()) {
+        cout << "No student records found." << endl;
+        return;
+    }
+
+    cout << endl;
+    cout << left << setw(20) << "Name"
+         << setw(12) << "ID"
+         << setw(20) << "Scores"
+         << setw(10) << "Average" << endl;
+    cout << "------------------------------------------------------------" << endl;
+
+    for (int i = 0; i < students.size(); i++) {
+        string scoreListText = "";
+        for (int j = 0; j < students[i].scores.size(); j++) {
+            scoreListText += to_string((int)students[i].scores[j]);
+            if (j < students[i].scores.size() - 1) {
+                scoreListText += ", ";
+            }
+        }
+
+        double averageScore = calAvg(students[i].scores);
+
+        cout << left << setw(20) << students[i].name
+             << setw(12) << students[i].id
+             << setw(20) << scoreListText
+             << fixed << setprecision(2) << averageScore << endl;
+    }
+}
+
+void calStudAvg(const vector<Student>& students) {
+    if (students.empty()) {
+        cout << "No student records found." << endl;
+        return;
+    }
+
+    int searchId;
+    cout << "Enter student ID: ";
+    cin >> searchId;
+
+    bool found = false;
+    for (int i = 0; i < students.size(); i++) {
+        if (students[i].id == searchId) {
+            double averageScore = calAvg(students[i].scores);
+            cout << students[i].name << "'s average score: " << fixed << setprecision(2) << averageScore << endl;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Error: Student ID " << searchId << " not found." << endl;
+    }
+}
+
+int main() {
+    vector<Student> students;
+    int choice = 0;
+
+    while (choice != 4) {
+        showMenu();
+        cin >> choice;
+
+        if (choice == 1) {
+            addStud(students);
+        } else if (choice == 2) {
+            dispStud(students);
+        } else if (choice == 3) {
+            calStudAvg(students);
+        } else if (choice == 4) {
+            cout << "Goodbye!" << endl;
+        } else {
+            cout << "Error: Invalid choice. Please enter a number between 1 and 4." << endl;
+        }
+    }
+
+    return 0;
+}
