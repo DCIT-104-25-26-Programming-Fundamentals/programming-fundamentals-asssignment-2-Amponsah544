@@ -51,3 +51,82 @@
 #include <iostream>
 using namespace std;
 
+void printFibonacciTerms() {
+    int count;
+    cout << "How many terms? ";
+    
+    if (!(cin >> count) || count <= 0) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Error: Please enter a positive integer." << endl;
+        return;
+    }
+
+    cout << "Fibonacci sequence: ";
+
+    long long first = 0;
+    long long second = 1;
+
+    for (int i = 1; i <= count; i++) {
+        if (i == 1) {
+            cout << first << " ";
+            continue;
+        }
+        if (i == 2) {
+            cout << second << " ";
+            continue;
+        }
+
+        long long nextTerm = first + second;
+        cout << nextTerm << " ";
+
+        first = second;
+        second = nextTerm;
+    }
+    cout << endl;
+}
+
+void checkFibonacciNumber() {
+    long long number;
+    cout << "Enter a number to check: ";
+
+    if (!(cin >> number) || number < 0) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Error: Please enter a non-negative integer." << endl;
+        return;
+    }
+
+    long long first = 0;
+    long long second = 1;
+
+    if (number == 0 || number == 1) {
+        cout << number << " is a Fibonacci number." << endl;
+        return;
+    }
+
+    long long nextTerm = first + second;
+    while (nextTerm < number) {
+        first = second;
+        second = nextTerm;
+        nextTerm = first + second;
+    }
+
+    if (nextTerm == number) {
+        cout << number << " is a Fibonacci number." << endl;
+    } else {
+        cout << number << " is NOT a Fibonacci number." << endl;
+    }
+}
+
+int main() {
+    cout << "--- PART A ---" << endl;
+    printFibonacciTerms();
+
+    cout << endl;
+
+    cout << "--- PART B ---" << endl;
+    checkFibonacciNumber();
+
+    return 0;
+}
