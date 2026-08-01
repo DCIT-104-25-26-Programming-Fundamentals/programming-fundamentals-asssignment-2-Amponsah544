@@ -41,4 +41,74 @@
 
 #include <iostream>
 using namespace std;
+const int MAX_SIZE = 100;
 
+double find_sum(const double arr[], int n) {
+    double total = 0.0;
+    for (int i = 0; i < n; i++) {
+        total += arr[i];
+    }
+    return total;
+}
+
+double find_avg(const double arr[], int n) {
+    double total = find_sum(arr, n);
+    return total / n;
+}
+
+double find_max(const double arr[], int n) {
+    double max_num = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max_num) {
+            max_num = arr[i];
+        }
+    }
+    return max_num;
+}
+
+double find_min(const double arr[], int n) {
+    double min_num = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min_num) {
+            min_num = arr[i];
+        }
+    }
+    return min_num;
+}
+
+int main() {
+    int n;
+    cout << "How many numbers? ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Error: Please enter a positive number." << endl;
+        return 0;
+    }
+
+    if (n > MAX_SIZE) {
+        cout << "Error: Maximum allowed capacity is " << MAX_SIZE << "." << endl;
+        return 0;
+    }
+
+    double arr[MAX_SIZE];
+
+    for (int i = 0; i < n; i++) {
+        cout << "Enter number " << (i + 1) << ": ";
+        cin >> arr[i];
+    }
+
+    double sum_val = find_sum(arr, n);
+    double avg_val = find_avg(arr, n);
+    double max_val = find_max(arr, n);
+    double min_val = find_min(arr, n);
+
+    cout << endl;
+    cout << "Results:" << endl;
+    cout << "Sum:     " << sum_val << endl;
+    cout << "Average: " << avg_val << endl;
+    cout << "Maximum: " << max_val << endl;
+    cout << "Minimum: " << min_val << endl;
+
+    return 0;
+}
