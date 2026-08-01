@@ -73,3 +73,104 @@
 #include <cmath>
 using namespace std;
 
+void showMenu() {
+    cout << endl;
+    cout << "============================" << endl;
+    cout << "      SIMPLE CALCULATOR" << endl;
+    cout << "============================" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "6. Exponentiation" << endl;
+    cout << "7. Quit" << endl;
+    cout << "Select an operation (1-7): ";
+}
+
+double add_num(double f_num, double s_num) {
+    return f_num + s_num;
+}
+
+double sub_num(double f_num, double s_num) {
+    return f_num - s_num;
+}
+
+double mul_num(double f_num, double s_num) {
+    return f_num * s_num;
+}
+
+void div_num(double f_num, double s_num) {
+    if (s_num == 0) {
+        cout << "Error: Cannot divide by zero." << endl;
+    } else {
+        double res = f_num / s_num;
+        cout << "Result: " << f_num << " / " << s_num << " = " 
+             << fixed << setprecision(2) << res << endl;
+    }
+}
+
+void mod_num(int f_num, int s_num) {
+    if (s_num == 0) {
+        cout << "Error: Cannot divide by zero." << endl;
+    } else {
+        int res = f_num % s_num;
+        cout << "Result: " << f_num << " % " << s_num << " = " << res << endl;
+    }
+}
+
+double pow_num(double b_num, double e_num) {
+    return pow(b_num, e_num);
+}
+
+int main() {
+    int choice = 0;
+
+    while (choice != 7) {
+        showMenu();
+        cin >> choice;
+
+        if (choice >= 1 && choice <= 6) {
+            double f_num, s_num;
+            cout << "Enter first number : ";
+            cin >> f_num;
+            cout << "Enter second number: ";
+            cin >> s_num;
+
+            if (choice == 1) {
+                double res = add_num(f_num, s_num);
+                cout << "Result: " << f_num << " + " << s_num << " = " 
+                     << fixed << setprecision(2) << res << endl;
+            } 
+            else if (choice == 2) {
+                double res = sub_num(f_num, s_num);
+                cout << "Result: " << f_num << " - " << s_num << " = " 
+                     << fixed << setprecision(2) << res << endl;
+            } 
+            else if (choice == 3) {
+                double res = mul_num(f_num, s_num);
+                cout << "Result: " << f_num << " * " << s_num << " = " 
+                     << fixed << setprecision(2) << res << endl;
+            } 
+            else if (choice == 4) {
+                div_num(f_num, s_num);
+            } 
+            else if (choice == 5) {
+                mod_num((int)f_num, (int)s_num);
+            } 
+            else if (choice == 6) {
+                double res = pow_num(f_num, s_num);
+                cout << "Result: " << f_num << " ^ " << s_num << " = " 
+                     << fixed << setprecision(2) << res << endl;
+            }
+        } 
+        else if (choice == 7) {
+            cout << "Goodbye!" << endl;
+        } 
+        else {
+            cout << "Error: Invalid choice. Please select a number between 1 and 7." << endl;
+        }
+    }
+
+    return 0;
+}
